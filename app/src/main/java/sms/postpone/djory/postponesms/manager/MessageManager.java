@@ -11,10 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import sms.postpone.djory.postponesms.dao.helper.MessageDao;
 import sms.postpone.djory.postponesms.model.Message;
-
+@Singleton
 public class MessageManager {
     private MessageDao messageDao;
     private Context context;

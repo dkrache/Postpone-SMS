@@ -76,11 +76,6 @@ public class PostponeApplication extends Application {
 
         @Provides
         @Singleton
-        public MessageManager providesMessageManager(Context context, MessageDao messageDao){
-            return  new MessageManager(context, messageDao);
-        }
-        @Provides
-        @Singleton
         public EventBus providesEventBus(Context context, MessageDao messageDao){
             return  EventBus.getDefault();
         }

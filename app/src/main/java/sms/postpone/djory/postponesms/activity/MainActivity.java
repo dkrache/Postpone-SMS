@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity
     @Inject Context context;
     @Inject MessageManager messageManager;
     @Inject EventBus bus;
+    // TODO : Clean this
     private int year;
     private int month;
     private int day;
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-    
+
     public void onEventBackgroundThread(Message message) {
         messageManager.create(message);
     }
@@ -133,6 +134,7 @@ public class MainActivity extends AppCompatActivity
     public void onEventMainThread(Message message) {
         Toast.makeText(this, message.getMessage(), Toast.LENGTH_SHORT).show();
     }
+
 
     public void onEventMainThread(TimePickerEvent event) {
         this.hour = event.getHour();
@@ -149,6 +151,5 @@ public class MainActivity extends AppCompatActivity
         this.sms = event.getSms();
         Message message = new Message(null, sms, new DateTime(year, month+1, day, hour, minute));
         Toast.makeText(this,message.toString(),Toast.LENGTH_LONG).show();
-
     }
 }
