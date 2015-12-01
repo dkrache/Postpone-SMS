@@ -12,14 +12,21 @@ import org.joda.time.DateTime;
 
 import java.util.Calendar;
 
+import javax.inject.Inject;
+
+import de.greenrobot.event.EventBus;
+import sms.postpone.djory.postponesms.PostponeApplication;
+import sms.postpone.djory.postponesms.event.DatePickerEvent;
+
 import static android.app.DatePickerDialog.*;
 
 public class DatePickerFragment extends DialogFragment
         implements OnDateSetListener {
-
+    @Inject EventBus bus;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current time as the default values for the picker
+        PostponeApplication.app().getPostponeComponent().inject(this);
         final DateTime dateTime = DateTime.now();
         int year = dateTime.getYear();
         int month = dateTime.getMonthOfYear()-1;
@@ -34,11 +41,7 @@ public class DatePickerFragment extends DialogFragment
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
         DialogFragment timeFragment = new TimePickerFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("year",year);
-        bundle.putInt("month",month);
-        bundle.putInt("day", day);
-        timeFragment.setArguments(bundle);
+        bus.post(new DatePickerEvent (year,month,day));
         timeFragment.show(getFragmentManager(), "timePicker");
     }
 }
