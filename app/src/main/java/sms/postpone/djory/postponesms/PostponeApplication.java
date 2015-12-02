@@ -3,8 +3,6 @@ package sms.postpone.djory.postponesms;
 import android.app.Application;
 import android.content.Context;
 
-import com.j256.ormlite.dao.Dao;
-
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -17,9 +15,6 @@ import sms.postpone.djory.postponesms.dao.helper.MessageDao;
 import sms.postpone.djory.postponesms.dialog.fragment.DatePickerFragment;
 import sms.postpone.djory.postponesms.dialog.fragment.EditTextFragment;
 import sms.postpone.djory.postponesms.dialog.fragment.TimePickerFragment;
-import sms.postpone.djory.postponesms.manager.MessageManager;
-import sms.postpone.djory.postponesms.model.Message;
-import sms.postpone.djory.postponesms.receiver.TaskReceiver;
 
 /**
  * Created by excilys on 19/11/15.
@@ -37,13 +32,14 @@ public class PostponeApplication extends Application {
         postponeComponent = DaggerPostponeApplication_PostponeComponent.builder().postponeModule(new PostponeModule()).build();
     }
 
+    public static PostponeApplication app() {
+        return app;
+    }
+
     public PostponeComponent getPostponeComponent(){
         return postponeComponent;
     }
 
-    public static PostponeApplication app(){
-        return app;
-    }
 
     @Component(modules = {PostponeModule.class})
     @Singleton
@@ -59,9 +55,6 @@ public class PostponeApplication extends Application {
     @Module
     public class PostponeModule{
 
-        public PostponeModule(){ }
-
-
         @Provides
         @Singleton
         public Context providesRootContext(){
@@ -76,7 +69,7 @@ public class PostponeApplication extends Application {
 
         @Provides
         @Singleton
-        public EventBus providesEventBus(Context context, MessageDao messageDao){
+        public EventBus providesEventBus(){
             return  EventBus.getDefault();
         }
     }

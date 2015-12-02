@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,43 +23,33 @@ public final class ContactUtil {
 
     public static List<Contact> getContacts(Context context) {
         List<Contact> contacts = new LinkedList<Contact>();
-        String phoneNumber = null;
-        String email = null;
 
         Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
-        String _ID = ContactsContract.Contacts._ID;
-        String DISPLAY_NAME = ContactsContract.Contacts.DISPLAY_NAME;
-        String HAS_PHONE_NUMBER = ContactsContract.Contacts.HAS_PHONE_NUMBER;
+        String id = ContactsContract.Contacts._ID;
+        String displayName = ContactsContract.Contacts.DISPLAY_NAME;
+        String hasPhoneNumberStr = ContactsContract.Contacts.HAS_PHONE_NUMBER;
 
-        Uri PhoneCONTENT_URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        String Phone_CONTACT_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
-        String NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
-
-        StringBuffer output = new StringBuffer();
+        Uri phoneContentURI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        String phoneContactID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
+        String number = ContactsContract.CommonDataKinds.Phone.NUMBER;
 
         ContentResolver contentResolver = context.getContentResolver();
 
         Cursor cursor = contentResolver.query(CONTENT_URI, null, null, null, null);
 
         // Loop for every contact in the phone
-        if (cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                String contact_id = cursor.getString(cursor.getColumnIndex(_ID));
-                String name = cursor.getString(cursor.getColumnIndex(DISPLAY_NAME));
-                int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(HAS_PHONE_NUMBER)));
-                if (hasPhoneNumber > 0) {
-                    // Query and loop for every phone number of the contact
-                    Cursor phoneCursor = contentResolver.query(PhoneCONTENT_URI, null, Phone_CONTACT_ID + " = ?", new String[]{contact_id}, null);
-                    while (phoneCursor.moveToNext()) {
-                        phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(NUMBER));
-                        //here
-                        contacts.add(new Contact(name, phoneNumber));
-                    }
-                    phoneCursor.close();
-
-                }
+        while (cursor.moveToNext()) {
+            String contact_id = cursor.getString(cursor.getColumnIndex(id));
+            String name = cursor.getString(cursor.getColumnIndex(displayName));
+            int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex(hasPhoneNumberStr)));
+            // Query and loop for every phone number of the contact
+            Cursor phoneCursor = contentResolver.query(phoneContentURI, null, phoneContactID + " = ?", new String[]{contact_id}, null);
+            while (phoneCursor.moveToNext()) {
+                contacts.add(new Contact(name, phoneCursor.getString(phoneCursor.getColumnIndex(number))));
             }
+            phoneCursor.close();
         }
+
         sort(contacts);
         return contacts;
     }

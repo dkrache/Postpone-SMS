@@ -11,6 +11,7 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
+import sms.postpone.djory.postponesms.exception.DatabaseException;
 import sms.postpone.djory.postponesms.model.Contact;
 import sms.postpone.djory.postponesms.model.Message;
 import timber.log.Timber;
@@ -34,7 +35,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, Message.class);
         } catch (SQLException e) {
             Log.e(TAG, "Can't create database", e);
-            throw new RuntimeException(e);
+            throw new DatabaseException(e);
         }
     }
 
@@ -46,7 +47,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             onCreate(db);
         } catch (SQLException e) {
             Log.e(TAG, "Impossible to drop database", e);
-            throw new RuntimeException(e);
+            throw new DatabaseException(e);
         }
     }
     /**
@@ -72,7 +73,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             return getDao(clazz);
         } catch (SQLException e) {
             Timber.e(e, "Error while creating %s dao", clazz.getSimpleName());
-            throw new RuntimeException(e);
+            throw new DatabaseException(e);
         }
     }
 

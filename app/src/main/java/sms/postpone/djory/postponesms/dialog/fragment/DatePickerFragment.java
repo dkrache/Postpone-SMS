@@ -5,12 +5,9 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v4.app.DialogFragment;
-import android.text.style.BulletSpan;
 import android.widget.DatePicker;
 
 import org.joda.time.DateTime;
-
-import java.util.Calendar;
 
 import javax.inject.Inject;
 
@@ -18,7 +15,8 @@ import de.greenrobot.event.EventBus;
 import sms.postpone.djory.postponesms.PostponeApplication;
 import sms.postpone.djory.postponesms.event.DatePickerEvent;
 
-import static android.app.DatePickerDialog.*;
+import static android.app.DatePickerDialog.BUTTON_NEGATIVE;
+import static android.app.DatePickerDialog.OnDateSetListener;
 
 public class DatePickerFragment extends DialogFragment
         implements OnDateSetListener {

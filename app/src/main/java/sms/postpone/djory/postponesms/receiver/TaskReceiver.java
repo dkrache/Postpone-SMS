@@ -12,11 +12,7 @@ import org.joda.time.DateTime;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import sms.postpone.djory.postponesms.PostponeApplication;
 import sms.postpone.djory.postponesms.activity.MainActivity;
-import sms.postpone.djory.postponesms.manager.MessageManager;
 import sms.postpone.djory.postponesms.model.Message;
 
 /**

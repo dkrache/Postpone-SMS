@@ -2,12 +2,8 @@ package sms.postpone.djory.postponesms.manager;
 
 import android.content.Context;
 
-import com.j256.ormlite.dao.Dao;
-
 import org.joda.time.DateTime;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;

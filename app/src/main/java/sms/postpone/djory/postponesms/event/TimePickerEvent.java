@@ -1,7 +1,5 @@
 package sms.postpone.djory.postponesms.event;
 
-import org.joda.time.DateTime;
-
 /**
  * Created by excilys on 01/12/15.
  */

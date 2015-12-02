@@ -43,5 +43,20 @@ public class Contact implements Comparable {
         }
         return 1;
     }
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Contact contact = (Contact) o;
+
+        return !(phone != null ? !phone.equals(contact.phone) : contact.phone != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return phone != null ? phone.hashCode() : 0;
+    }
 }

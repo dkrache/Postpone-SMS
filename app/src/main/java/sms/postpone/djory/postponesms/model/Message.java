@@ -15,7 +15,9 @@ public class Message {
     @DatabaseField(foreign = true) private Contact contact;
     @DatabaseField private DateTime date;
 
-    private Message(){}
+    @SuppressWarnings("unused") // used by Ormlite
+    private Message() {
+    }
 
     public Message(Contact contact, String message, DateTime date) {
         this.contact = contact;

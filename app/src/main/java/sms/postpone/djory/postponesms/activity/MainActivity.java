@@ -1,6 +1,5 @@
 package sms.postpone.djory.postponesms.activity;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -26,8 +25,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
-import sms.postpone.djory.postponesms.R;
 import sms.postpone.djory.postponesms.PostponeApplication;
+import sms.postpone.djory.postponesms.R;
 import sms.postpone.djory.postponesms.dialog.fragment.DatePickerFragment;
 import sms.postpone.djory.postponesms.event.DatePickerEvent;
 import sms.postpone.djory.postponesms.event.SMSEvent;
@@ -104,8 +103,7 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        // Handle navigation view item clicks here
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
