@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
@@ -43,6 +44,9 @@ public class MainActivity extends AppCompatActivity{
     @Inject Context context;
     @Inject MessageManager messageManager;
     @Inject EventBus bus;
+
+    private AutoCompleteTextView autoCompleteTextView;
+
     // TODO : Clean this
     private int year;
     private int month;

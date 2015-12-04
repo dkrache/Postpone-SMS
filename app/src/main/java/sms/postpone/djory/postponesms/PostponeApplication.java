@@ -10,6 +10,8 @@ import dagger.Module;
 import dagger.Provides;
 import de.greenrobot.event.EventBus;
 import sms.postpone.djory.postponesms.activity.MainActivity;
+import sms.postpone.djory.postponesms.activity.SplashScreenActivity;
+import sms.postpone.djory.postponesms.dao.helper.ContactDao;
 import sms.postpone.djory.postponesms.dao.helper.DatabaseHelper;
 import sms.postpone.djory.postponesms.dao.helper.MessageDao;
 import sms.postpone.djory.postponesms.dialog.fragment.DatePickerFragment;
@@ -45,6 +47,7 @@ public class PostponeApplication extends Application {
     @Singleton
     public interface PostponeComponent {
         void inject(MainActivity mainActivity);
+        void inject(SplashScreenActivity splashScreenActivity);
 
         //Fragment
         void inject(DatePickerFragment datePickerFragment);
@@ -65,6 +68,12 @@ public class PostponeApplication extends Application {
         @Singleton
         public MessageDao providesMessageDao(){
             return databaseHelper.getMessageDao();
+        }
+
+        @Provides
+        @Singleton
+        public ContactDao providesContactDao(){
+            return databaseHelper.getContactDao();
         }
 
         @Provides

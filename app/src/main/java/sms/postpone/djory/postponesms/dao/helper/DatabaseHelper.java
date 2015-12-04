@@ -22,6 +22,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String TAG = DatabaseHelper.class.getCanonicalName();
     private MessageDao messageDao;
+    private ContactDao contactDao;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -61,6 +62,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return messageDao;
     }
 
+    public ContactDao getContactDao() {
+        if (contactDao == null) {
+            contactDao = new ContactDao(createDao(Contact.class));
+        }
+        return contactDao;
+    }
+
     /**
      * Create a Dao of a given model class.
      *
@@ -76,5 +84,4 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             throw new DatabaseException(e);
         }
     }
-
 }
