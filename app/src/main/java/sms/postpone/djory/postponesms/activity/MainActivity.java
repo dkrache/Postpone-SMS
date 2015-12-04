@@ -36,14 +36,10 @@ import sms.postpone.djory.postponesms.model.Contact;
 import sms.postpone.djory.postponesms.model.Message;
 import sms.postpone.djory.postponesms.util.ContactUtil;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity{
 
-
-    @Bind(R.id.drawer_layout) DrawerLayout drawer;
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.fab) FloatingActionButton fab;
-    @Bind(R.id.nav_view) NavigationView navigationView;
     @Inject Context context;
     @Inject MessageManager messageManager;
     @Inject EventBus bus;
@@ -62,12 +58,6 @@ public class MainActivity extends AppCompatActivity
         ButterKnife.bind(this);
         PostponeApplication.app().getPostponeComponent().inject(this);
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
 
@@ -100,29 +90,11 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
     @SuppressWarnings("unused")
     @OnClick(R.id.fab)
     public void getSMSCreator() {
         DialogFragment dateFragment = new DatePickerFragment();
         dateFragment.show(getSupportFragmentManager(), "datePicker");
-    }
-
-    //
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     public void onEventBackgroundThread(Message message) {

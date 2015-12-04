@@ -8,6 +8,8 @@ sonarRunner {
         property "sonar.sources", "src"
         property "sonar.profile", "Android Lint"
         property "sonar.projectName", "PostponeSMS"
+        property 'sonar.import_unknown_files', true
+        property 'sonar.android.lint.report', 'build/outputs/lint-results.xml'
     }
 }
 android {
