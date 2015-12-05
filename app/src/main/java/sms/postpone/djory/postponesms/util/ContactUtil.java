@@ -6,23 +6,25 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import sms.postpone.djory.postponesms.model.Contact;
-
-import static java.util.Collections.sort;
 
 /**
  * Created by ws on 14/02/15.
  */
 public final class ContactUtil {
+
+    // need to be instantiate one time;
+    private static Set<Contact> contactHolder;
+
     private ContactUtil() {
 
     }
 
-    public static List<Contact> getContacts(Context context) {
-        List<Contact> contacts = new LinkedList<Contact>();
+    public static Set<Contact> getContacts(Context context) {
+        Set<Contact> contacts = new HashSet<Contact>();
 
         Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
         String id = ContactsContract.Contacts._ID;
@@ -49,9 +51,16 @@ public final class ContactUtil {
             }
             phoneCursor.close();
         }
-
-        sort(contacts);
         return contacts;
+    }
+
+
+    public static Set<Contact> getContactHolder() {
+        return contactHolder;
+    }
+
+    public static void setContactHolder(Set<Contact> contactHolder) {
+        ContactUtil.contactHolder = contactHolder;
     }
 }
 

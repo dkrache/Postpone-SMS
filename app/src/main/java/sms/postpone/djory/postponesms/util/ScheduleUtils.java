@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 import android.widget.Toast;
 
 import java.util.List;
@@ -20,12 +19,12 @@ import sms.postpone.djory.postponesms.receiver.TaskReceiver;
 public class ScheduleUtils {
 
 
-    public static void schedule(final View v, final Message message) {
-        Toast.makeText(v.getContext(), "Enregistré ", Toast.LENGTH_SHORT).show();
-        Intent intentAlarm = new Intent(v.getContext(), TaskReceiver.class);
-        AlarmManager alarmManager = (AlarmManager) v.getContext().getSystemService(Context.ALARM_SERVICE);
+    public static void schedule(final Context context, final Message message) {
+        Toast.makeText(context, "Enregistré ", Toast.LENGTH_SHORT).show();
+        Intent intentAlarm = new Intent(context, TaskReceiver.class);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Random generator = new Random();
-        alarmManager.set(AlarmManager.RTC_WAKEUP, message.getDate().getMillis(), PendingIntent.getBroadcast(v.getContext(), generator.nextInt(), intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
+        alarmManager.set(AlarmManager.RTC_WAKEUP, message.getDate().getMillis(), PendingIntent.getBroadcast(context, generator.nextInt(), intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT));
     }
 
     public static void schedule(final Context context, final List<Message> messages) {

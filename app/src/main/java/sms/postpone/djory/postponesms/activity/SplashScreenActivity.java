@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -36,8 +37,9 @@ public class SplashScreenActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                List<Contact> contacts = ContactUtil.getContacts(SplashScreenActivity.this);
+                Set<Contact> contacts = ContactUtil.getContacts(SplashScreenActivity.this);
                 contactManager.save(contacts);
+                ContactUtil.setContactHolder(contacts);
                 bus.post(new LoadedContactEvent());
             }
         }).start();

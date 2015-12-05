@@ -12,7 +12,10 @@ import org.joda.time.DateTime;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import sms.postpone.djory.postponesms.activity.MainActivity;
+import sms.postpone.djory.postponesms.manager.MessageManager;
 import sms.postpone.djory.postponesms.model.Message;
 
 /**
@@ -20,12 +23,13 @@ import sms.postpone.djory.postponesms.model.Message;
  */
 public class TaskReceiver extends BroadcastReceiver {
 
+    @Inject MessageManager messageManager;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         DateTime dateTime = DateTime.now();
-        List<Message> messages = null;
-        for (Message message : messages ) {
+        List<Message> messages = messageManager.getMessage(dateTime);
+        for (Message message : messages) {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(message.getContact().getPhone(), null, message.getMessage(), null, null);
             createNotification(context, "Message send to : " + message.getContact().getNom());

@@ -36,16 +36,15 @@ import sms.postpone.djory.postponesms.manager.MessageManager;
 import sms.postpone.djory.postponesms.model.Contact;
 import sms.postpone.djory.postponesms.model.Message;
 import sms.postpone.djory.postponesms.util.ContactUtil;
+import sms.postpone.djory.postponesms.util.ScheduleUtils;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.fab) FloatingActionButton fab;
     @Inject Context context;
     @Inject MessageManager messageManager;
     @Inject EventBus bus;
-
-    private AutoCompleteTextView autoCompleteTextView;
 
     // TODO : Clean this
     private int year;
@@ -68,7 +67,6 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -82,17 +80,6 @@ public class MainActivity extends AppCompatActivity{
         super.onPause();
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            List<Contact> contacts = ContactUtil.getContacts(this);
-            Log.d("test", contacts.toString());
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("unused")
     @OnClick(R.id.fab)
@@ -109,7 +96,6 @@ public class MainActivity extends AppCompatActivity{
         Toast.makeText(this, message.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
-
     public void onEventMainThread(TimePickerEvent event) {
         this.hour = event.getHour();
         this.minute = event.getMinute();
@@ -123,7 +109,9 @@ public class MainActivity extends AppCompatActivity{
 
     public void onEventMainThread(SMSEvent event) {
         this.sms = event.getSms();
-        Message message = new Message(null, sms, new DateTime(year, month+1, day, hour, minute));
-        Toast.makeText(this,message.toString(),Toast.LENGTH_LONG).show();
+        Message message = new Message(event.getContact(), sms, new DateTime(year, month + 1, day, hour, minute));
+        Toast.makeText(this, message.toString(), Toast.LENGTH_LONG).show();
+        messageManager.create(message);
+        ScheduleUtils.schedule(this, message);
     }
 }

@@ -10,10 +10,13 @@ import org.joda.time.DateTime;
  */
 @DatabaseTable(tableName = "Message")
 public class Message {
+    public static final String MESSAGE = "message";
+    public static final String CONTACT = "contact";
+    public static final String DATE = "date";
     @DatabaseField(generatedId = true) private Long id;
-    @DatabaseField private String message;
-    @DatabaseField(foreign = true) private Contact contact;
-    @DatabaseField private DateTime date;
+    @DatabaseField(columnName = MESSAGE) private String message;
+    @DatabaseField(columnName = DATE) private DateTime date;
+    @DatabaseField(columnName = CONTACT, foreign = true) private Contact contact;
 
     @SuppressWarnings("unused") // used by Ormlite
     private Message() {

@@ -11,6 +11,8 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 
+import sms.postpone.djory.postponesms.dao.ContactDao;
+import sms.postpone.djory.postponesms.dao.MessageDao;
 import sms.postpone.djory.postponesms.exception.DatabaseException;
 import sms.postpone.djory.postponesms.model.Contact;
 import sms.postpone.djory.postponesms.model.Message;

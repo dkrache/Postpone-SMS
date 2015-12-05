@@ -8,16 +8,22 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 @DatabaseTable(tableName = "contact")
 public class Contact implements Comparable {
-    @DatabaseField(generatedId = true) private Long id;
-    @DatabaseField private String nom;
-    @DatabaseField private String phone;
+
+    public static final String NAME = "name";
+    public static final String PHONE = "phone";
+
+    @DatabaseField(columnName = NAME)
+    private String nom;
+    @DatabaseField(columnName = PHONE, unique = true, id = true)
+    private String phone;
 
     public Contact() {
     }
 
     public Contact(String nom, String phone) {
         this.nom = nom;
-        this.phone = phone;
+        // TODO : need tweak here
+        this.phone = phone.replaceAll(" ", "").replace("+33","0");
     }
 
     public String getNom() {
@@ -59,4 +65,9 @@ public class Contact implements Comparable {
     public int hashCode() {
         return phone != null ? phone.hashCode() : 0;
     }
+
+    public String toString() {
+        return nom;
+    }
+
 }
