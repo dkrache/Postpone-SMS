@@ -11,8 +11,8 @@ import dagger.Provides;
 import de.greenrobot.event.EventBus;
 import sms.postpone.djory.postponesms.activity.MainActivity;
 import sms.postpone.djory.postponesms.activity.SplashScreenActivity;
-import sms.postpone.djory.postponesms.dao.MessageDao;
 import sms.postpone.djory.postponesms.dao.ContactDao;
+import sms.postpone.djory.postponesms.dao.MessageDao;
 import sms.postpone.djory.postponesms.dao.helper.DatabaseHelper;
 import sms.postpone.djory.postponesms.dialog.fragment.DatePickerFragment;
 import sms.postpone.djory.postponesms.dialog.fragment.EditTextFragment;
@@ -27,7 +27,7 @@ public class PostponeApplication extends Application {
     private DatabaseHelper databaseHelper;
 
     @Override
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
         app = this;
         databaseHelper = new DatabaseHelper(this);
@@ -38,7 +38,7 @@ public class PostponeApplication extends Application {
         return app;
     }
 
-    public PostponeComponent getPostponeComponent(){
+    public PostponeComponent getPostponeComponent() {
         return postponeComponent;
     }
 
@@ -47,39 +47,42 @@ public class PostponeApplication extends Application {
     @Singleton
     public interface PostponeComponent {
         void inject(MainActivity mainActivity);
+
         void inject(SplashScreenActivity splashScreenActivity);
 
         //Fragment
         void inject(DatePickerFragment datePickerFragment);
+
         void inject(EditTextFragment editTextFragment);
+
         void inject(TimePickerFragment datePickerFragment);
     }
 
     @Module
-    public class PostponeModule{
+    public class PostponeModule {
 
         @Provides
         @Singleton
-        public Context providesRootContext(){
+        public Context providesRootContext() {
             return PostponeApplication.this;
         }
 
         @Provides
         @Singleton
-        public MessageDao providesMessageDao(){
+        public MessageDao providesMessageDao() {
             return databaseHelper.getMessageDao();
         }
 
         @Provides
         @Singleton
-        public ContactDao providesContactDao(){
+        public ContactDao providesContactDao() {
             return databaseHelper.getContactDao();
         }
 
         @Provides
         @Singleton
-        public EventBus providesEventBus(){
-            return  EventBus.getDefault();
+        public EventBus providesEventBus() {
+            return EventBus.getDefault();
         }
     }
 

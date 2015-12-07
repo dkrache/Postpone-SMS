@@ -16,7 +16,7 @@ public class Message {
     @DatabaseField(generatedId = true) private Long id;
     @DatabaseField(columnName = MESSAGE) private String message;
     @DatabaseField(columnName = DATE) private DateTime date;
-    @DatabaseField(columnName = CONTACT, foreign = true) private Contact contact;
+    @DatabaseField(columnName = CONTACT, foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true) private Contact contact;
 
     @SuppressWarnings("unused") // used by Ormlite
     private Message() {

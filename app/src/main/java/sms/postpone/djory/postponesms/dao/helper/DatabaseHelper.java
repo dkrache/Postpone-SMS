@@ -53,6 +53,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             throw new DatabaseException(e);
         }
     }
+
     /**
      * Returns the Database Access Object (DAO) for our SimpleData class. It will create it or just give the cached
      * value.
@@ -74,8 +75,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     /**
      * Create a Dao of a given model class.
      *
-     * @param clazz  The class that the code will be operating on.
-     * @param <T>    The class that the code will be operating on.
+     * @param clazz The class that the code will be operating on.
+     * @param <T>   The class that the code will be operating on.
      * @return A Dao operating on the given class.
      */
     private <T> Dao<T, Long> createDao(Class<T> clazz) {

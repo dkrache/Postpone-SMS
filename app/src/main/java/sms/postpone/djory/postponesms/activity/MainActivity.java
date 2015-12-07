@@ -3,21 +3,15 @@ package sms.postpone.djory.postponesms.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -26,22 +20,27 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 import sms.postpone.djory.postponesms.PostponeApplication;
 import sms.postpone.djory.postponesms.R;
+import sms.postpone.djory.postponesms.adapter.MessageAdapter;
 import sms.postpone.djory.postponesms.dialog.fragment.DatePickerFragment;
 import sms.postpone.djory.postponesms.event.DatePickerEvent;
+import sms.postpone.djory.postponesms.event.MessageEvent;
 import sms.postpone.djory.postponesms.event.SMSEvent;
 import sms.postpone.djory.postponesms.event.TimePickerEvent;
 import sms.postpone.djory.postponesms.manager.MessageManager;
-import sms.postpone.djory.postponesms.model.Contact;
 import sms.postpone.djory.postponesms.model.Message;
 import sms.postpone.djory.postponesms.util.ContactUtil;
 import sms.postpone.djory.postponesms.util.ScheduleUtils;
+
+import static android.R.layout.simple_dropdown_item_1line;
 
 public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.fab) FloatingActionButton fab;
+    @Bind(R.id.sticky_list) StickyListHeadersListView stickyList;
     @Inject Context context;
     @Inject MessageManager messageManager;
     @Inject EventBus bus;
@@ -61,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         PostponeApplication.app().getPostponeComponent().inject(this);
         setSupportActionBar(toolbar);
+        messageManager.getMessages();
     }
 
 
@@ -113,5 +113,11 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, message.toString(), Toast.LENGTH_LONG).show();
         messageManager.create(message);
         ScheduleUtils.schedule(this, message);
+        messageManager.getMessages();
+    }
+
+    public void onEventMainThread(MessageEvent event) {
+        MessageAdapter adapter = new MessageAdapter(this, simple_dropdown_item_1line, event.getMessages());
+        stickyList.setAdapter(adapter);
     }
 }

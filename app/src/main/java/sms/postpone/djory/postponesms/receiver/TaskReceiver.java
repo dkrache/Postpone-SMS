@@ -32,7 +32,7 @@ public class TaskReceiver extends BroadcastReceiver {
         for (Message message : messages) {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(message.getContact().getPhone(), null, message.getMessage(), null, null);
-            createNotification(context, "Message send to : " + message.getContact().getNom());
+            createNotification(context, "Message send to : " + message.getContact().getName());
         }
     }
 

@@ -8,7 +8,6 @@ import org.joda.time.DateTime;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import sms.postpone.djory.postponesms.model.Contact;
 import sms.postpone.djory.postponesms.model.Message;
 
 public class MessageDao extends RuntimeExceptionDao<Message, Long> {

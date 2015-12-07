@@ -9,22 +9,31 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import de.greenrobot.event.EventBus;
 import sms.postpone.djory.postponesms.dao.MessageDao;
+import sms.postpone.djory.postponesms.event.MessageEvent;
 import sms.postpone.djory.postponesms.model.Message;
 
 @Singleton
 public class MessageManager {
     private MessageDao messageDao;
     private Context context;
-
+    private EventBus bus;
     @Inject
-    public MessageManager(Context context, MessageDao messageDao) {
+    public MessageManager(Context context, MessageDao messageDao, EventBus bus) {
         this.context = context;
         this.messageDao = messageDao;
+        this.bus = bus;
     }
 
-    public List<Message> getMessages() {
-        return messageDao.queryForAll();
+    public void getMessages() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                bus.post(new MessageEvent(messageDao.queryForAll()));
+            }
+        }).start();
     }
 
     public void create(Message message) {

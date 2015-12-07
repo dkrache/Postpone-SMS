@@ -1,8 +1,6 @@
 package sms.postpone.djory.postponesms.adapter;
 
-import android.content.ClipData;
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,12 +29,11 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
             v = vi.inflate(R.layout.item_contact, null);
             viewHolder = new ViewHolder(v);
             v.setTag(viewHolder);
-        }
-        else {
-            viewHolder = (ViewHolder)v.getTag();
+        } else {
+            viewHolder = (ViewHolder) v.getTag();
         }
         Contact p = getItem(position);
-        viewHolder.contactName.setText(p.getNom());
+        viewHolder.contactName.setText(p.getName());
         viewHolder.contactPhone.setText(p.getPhone());
         return v;
     }
@@ -44,7 +41,8 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
     class ViewHolder {
         @Bind(R.id.contact_name) TextView contactName;
         @Bind(R.id.contact_phone) TextView contactPhone;
-        public ViewHolder(View v){
+
+        public ViewHolder(View v) {
             ButterKnife.bind(this, v);
         }
     }

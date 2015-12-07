@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -51,7 +50,7 @@ public class SplashScreenActivity extends Activity {
         super.onPause();
     }
 
-    public void onEventMainThread(LoadedContactEvent event){
+    public void onEventMainThread(LoadedContactEvent event) {
         startActivity(new Intent(SplashScreenActivity.this, MainActivity.class));
         finish();
     }

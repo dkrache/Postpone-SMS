@@ -13,7 +13,7 @@ public class Contact implements Comparable {
     public static final String PHONE = "phone";
 
     @DatabaseField(columnName = NAME)
-    private String nom;
+    private String name;
     @DatabaseField(columnName = PHONE, unique = true, id = true)
     private String phone;
 
@@ -21,17 +21,17 @@ public class Contact implements Comparable {
     }
 
     public Contact(String nom, String phone) {
-        this.nom = nom;
+        this.name = nom;
         // TODO : need tweak here
-        this.phone = phone.replaceAll(" ", "").replace("+33","0");
+        this.phone = phone.replaceAll(" ", "").replace("+33", "0");
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhone() {
@@ -45,7 +45,7 @@ public class Contact implements Comparable {
     @Override
     public int compareTo(Object o) {
         if (o instanceof Contact) {
-            return nom.compareTo(((Contact) o).getNom());
+            return name.compareTo(((Contact) o).getName());
         }
         return 1;
     }
@@ -67,7 +67,7 @@ public class Contact implements Comparable {
     }
 
     public String toString() {
-        return nom;
+        return name;
     }
 
 }
