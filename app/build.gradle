@@ -2,16 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: "sonar-runner"
 
-
-sonarRunner {
-    sonarProperties {
-        property "sonar.sources", "src"
-        property "sonar.profile", "Android Lint"
-        property "sonar.projectName", "PostponeSMS"
-        property 'sonar.import_unknown_files', true
-        property 'sonar.android.lint.report', 'build/outputs/lint-results.xml'
-    }
-}
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
@@ -28,6 +18,21 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+}
+
+sonarRunner {
+    sonarProperties {
+        property "sonar.host.url", "http://localhost:9000/"
+
+        property "sonar.projectKey", "PostponeSMS"
+        property "sonar.projectName", "PostponeSMS"
+        property "sonar.projectVersion", "1.0.0"
+        property "sonar.profile", "Android Lint"
+        property "sonar.scm.provider", "git"
+        property "sonar.language", "java"
+        property "sonar.sources", "src/main"
+        property "sonar.profile", "Android Lint"
     }
 }
 dependencies {
